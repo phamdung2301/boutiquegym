@@ -2,11 +2,24 @@
   var data = window.FORGE_DATA || { classes: [], schedule: [], coaches: [], memberships: [], testimonials: [] };
   function money(n) { return n.toLocaleString("vi-VN") + " đ"; }
   var list = document.getElementById("class-list");
-  if (list) {
-    list.innerHTML = data.classes.map(function (c) {
-      return "<article class='card'><h3>" + c.name + "</h3><p>" + c.desc + "</p><p>Cường độ: " + c.intensity + "</p><p class='price'>" + money(c.price) + " / buổi</p></article>";
-    }).join("");
+  var countEl = document.getElementById("class-count");
+  function renderClasses(type) {
+    var shown = data.classes.filter(function (c) { return type === "all" || c.type === type; });
+    if (list) {
+      list.innerHTML = shown.map(function (c) {
+        return "<article class='card'><h3>" + c.name + "</h3><p>" + c.desc + "</p><p>Cường độ: " + c.intensity + "</p><p class='price'>" + money(c.price) + " / buổi</p></article>";
+      }).join("");
+    }
+    if (countEl) countEl.textContent = "Đang hiển thị " + shown.length + " / " + data.classes.length + " lớp.";
   }
+  renderClasses("all");
+  document.querySelectorAll(".filters .chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".filters .chip").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      renderClasses(btn.getAttribute("data-type"));
+    });
+  });
   var sched = document.getElementById("schedule-list");
   if (sched) {
     sched.innerHTML = data.schedule.map(function (d) {
