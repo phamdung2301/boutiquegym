@@ -44,6 +44,23 @@
       return "<article class='card'><p>“" + t.text + "”</p><p><strong>" + t.name + "</strong></p></article>";
     }).join("");
   }
+  var calcPlan = document.getElementById("calc-plan");
+  var calcMonths = document.getElementById("calc-months");
+  var calcResult = document.getElementById("calc-result");
+  function updateCalc() {
+    if (!calcPlan || !calcResult) return;
+    var plan = data.memberships.find(function (m) { return m.id === calcPlan.value; }) || data.memberships[0];
+    var months = parseInt(calcMonths ? calcMonths.value : "1", 10);
+    var discount = months >= 6 ? 0.10 : (months >= 3 ? 0.05 : 0);
+    var total = Math.round(plan.price * months * (1 - discount));
+    calcResult.textContent = plan.name + " × " + months + " tháng: " + money(total) + (discount ? " (đã giảm " + Math.round(discount * 100) + "%)" : "");
+  }
+  if (calcPlan) {
+    calcPlan.innerHTML = data.memberships.map(function (m) { return "<option value='" + m.id + "'>" + m.name + " — " + money(m.price) + "/tháng</option>"; }).join("");
+    calcPlan.addEventListener("change", updateCalc);
+    if (calcMonths) calcMonths.addEventListener("change", updateCalc);
+    updateCalc();
+  }
   var sel = document.getElementById("trial-class");
   if (sel) {
     sel.innerHTML = data.classes.map(function (c) { return "<option value='" + c.id + "'>" + c.name + "</option>"; }).join("");
