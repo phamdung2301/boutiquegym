@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FORGE — Boutique Gym Đà Nẵng</title>
+<meta name="description" content="Concept website: lớp boutique gym, lịch tập, huấn luyện viên, gói tập. Form đăng ký trải nghiệm chỉ là demo.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="logo" href="#">FORGE<span>.</span></a>
+  <nav aria-label="Chính">
+    <a href="#classes">Lớp tập</a>
+    <a href="#schedule">Lịch</a>
+    <a href="#coaches">Huấn luyện viên</a>
+    <a href="#membership">Gói tập</a>
+    <a href="#trial">Trải nghiệm</a>
+  </nav>
+  <a class="btn btn-volt" href="#trial">Tập thử demo</a>
+</header>
+<div class="progress" aria-hidden="true"><div id="progress-bar"></div></div>
+<main>
+  <section class="hero" id="top">
+    <p class="eyebrow">BOUTIQUE GYM — ĐÀ NẴNG · SMALL CLASS · BIG RESULT</p>
+    <h1>TẬP ÍT NGƯỜI.<br>KẾT QUẢ RÕ RÀNG.</h1>
+    <p class="lede">Lớp tối đa 12 người, huấn luyện viên sửa form từng người, lịch tập rõ ràng theo tuần.</p>
+    <div class="hero-actions">
+      <a class="btn btn-volt" href="#classes">Xem lớp tập</a>
+      <a class="btn btn-ghost" href="#membership">Tính gói tập</a>
+    </div>
+    <p class="demo-note">Concept demo — lớp, lịch và giá dưới đây là dữ liệu minh họa, chưa phải đăng ký thật.</p>
+  </section>
+  <section id="classes"><h2>Lớp tập</h2><div id="class-list" class="grid"></div></section>
+  <section id="schedule"><h2>Lịch tuần</h2><div id="schedule-list"></div></section>
+  <section id="coaches"><h2>Huấn luyện viên</h2><div id="coach-list" class="grid"></div></section>
+  <section id="membership"><h2>Gói tập &amp; tính giá</h2><div id="membership-box"></div></section>
+  <section id="testimonials"><h2>Học viên nói gì</h2><div id="testimonial-list" class="grid"></div></section>
+  <section id="trial"><h2>Đăng ký tập thử (demo)</h2><form id="trial-form"><label>Họ tên <input name="name" required></label><label>Lớp muốn thử <select name="class" id="trial-class"></select></label><label>Ngày <input type="date" name="date" required></label><button class="btn btn-volt" type="submit">Lưu demo vào trình duyệt</button><p class="demo-note">Demo: chỉ lưu ở trình duyệt của bạn, không gửi đi đâu và không giữ chỗ thật.</p><p id="trial-result" role="status"></p></form></section>
+  <section id="faq"><h2>Câu hỏi thường gặp</h2><details open><summary>Chưa tập bao giờ có theo được không?</summary><p>Được. Lớp chia theo cấp độ, huấn luyện viên điều chỉnh bài theo thể lực từng người.</p></details><details><summary>Có cần mang giày riêng không?</summary><p>Nên mang giày tập trong nhà, sạch và bám sàn tốt.</p></details></section>
+</main>
+<footer><p>FORGE — Concept demo · FORGE v1.0 — 2026-10-26 · Lớp, lịch và giá là dữ liệu minh họa.</p></footer>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
