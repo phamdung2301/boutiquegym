@@ -12,5 +12,6 @@ form{display:grid;gap:1rem;max-width:520px}input,select{width:100%;padding:.7rem
 .filters{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}.chip{padding:.5rem 1rem;background:#222;color:#fff;border:2px solid #444;cursor:pointer;font-weight:700;text-transform:uppercase}.chip.active{background:var(--volt);color:var(--ink);border-color:var(--volt)}
 .marquee{overflow:hidden;white-space:nowrap;background:var(--volt);color:var(--ink);padding:.6rem 0;font-weight:900;letter-spacing:.05em}.marquee span{display:inline-block;animation:scroll 20s linear infinite}@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 footer{text-align:center;padding:2rem;color:var(--muted)}
-@media(max-width:640px){.topbar nav{display:none}}
+.reveal-init{opacity:.3;transform:translateY(10px);transition:opacity .5s ease,transform .5s ease}.reveal-init.in-view{opacity:1;transform:none}
+@media(max-width:640px){.topbar nav{display:none}.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

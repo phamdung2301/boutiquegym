@@ -79,6 +79,14 @@
       if (out) out.textContent = "Đã lưu demo: " + fd.get("name") + " — " + fd.get("date") + ". Đây chưa phải đăng ký thật.";
     });
   }
+  // Scroll reveal, JS-gated only: content stays visible if JS or observer is unavailable.
+  if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in-view"); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    document.querySelectorAll("section").forEach(function (sec) { sec.classList.add("reveal-init"); observer.observe(sec); });
+    setTimeout(function () { document.querySelectorAll(".reveal-init").forEach(function (el) { el.classList.add("in-view"); }); }, 3000);
+  }
   // Scroll progress
   window.addEventListener("scroll", function () {
     var bar = document.getElementById("progress-bar");
