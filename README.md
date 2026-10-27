@@ -1,4 +1,4 @@
-# FORGE — Boutique Gym (v3.0)
+# FORGE — Boutique Gym (v3.1)
 
 React + Vite + TypeScript + Three.js (React Three Fiber) + Framer Motion.
 
@@ -14,3 +14,14 @@ React + Vite + TypeScript + Three.js (React Three Fiber) + Framer Motion.
 - Membership as a comparison table, not cards, plus add-ons and a held-plan save.
 - Weekly workout planner with a per-goal plan grid and done tracking.
 - Trainer roster + trial booking, separate from class booking.
+
+## v3.1 — component upgrades only (layout skeleton unchanged)
+
+- Common: per-section room backgrounds, masked line reveals, 10px mono tech labels, rolling-text button hover.
+- Hero: scroll-scrubbed rig rotation + live side index (floor-counter style).
+- Timetable: spots-remaining bar, hover detail, countdown to next class.
+- Strength Lab: plates slide on staggered in 3D + 1RM mini-chart by reps.
+- Membership: highlighted selected column, sticky table header, sticky total bar.
+- Planner: progress ring, streak markers, day detail as a bottom sheet.
+- Trainers: specialty tags + stats, trial form as a sheet pre-filled with the chosen coach.
+- Behaviour and localStorage keys unchanged from v3 (forge-v3-*).
