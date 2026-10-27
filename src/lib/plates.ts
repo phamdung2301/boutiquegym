@@ -21,12 +21,12 @@ export function plateRadiusKg(kg: number): number {
 }
 
 export function plateColorKg(kg: number): string {
-  if (kg >= 25) return "#D6FF3F";
-  if (kg >= 20) return "#8a8f88";
-  if (kg >= 15) return "#3a3f3a";
-  if (kg >= 10) return "#c8cbc4";
-  if (kg >= 5) return "#9aa39a";
-  return "#e8e9e4";
+  if (kg >= 25) return "#E11D2E";
+  if (kg >= 20) return "#8A7F7A";
+  if (kg >= 15) return "#3A2A2A";
+  if (kg >= 10) return "#CFC6BC";
+  if (kg >= 5) return "#A89A90";
+  return "#EDE6DA";
 }
 
 // Epley formula for a rough 1RM estimate from a working set.

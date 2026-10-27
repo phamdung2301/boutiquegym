@@ -3,9 +3,9 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { plateColorKg, plateRadiusKg } from "../lib/plates";
 
-const STEEL = "#2a2e2a";
-const DARK = "#1a1d1a";
-const VOLT = "#D6FF3F";
+const STEEL = "#2E2626";
+const DARK = "#1E1212";
+const BLOOD = "#E11D2E";
 
 function PlateMesh({ side, targetX, kg, delay }: { side: 1 | -1; targetX: number; kg: number; delay: number }) {
   // v3.1: plates slide onto the bar instead of appearing instantly.
@@ -55,7 +55,7 @@ function Barbell({ plates, withBench }: { plates: number[]; withBench: boolean }
       {[-0.9, 0.9].map((x) => (
         <mesh key={x} position={[x, 1.35, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[0.07, 0.07, 0.06, 16]} />
-          <meshStandardMaterial color={VOLT} metalness={0.4} roughness={0.4} />
+          <meshStandardMaterial color={BLOOD} metalness={0.4} roughness={0.4} />
         </mesh>
       ))}
       {renderSide(1)}
@@ -108,7 +108,7 @@ function Rack() {
       {[-1.1, 1.1].map((x) => (
         <mesh key={`safe-${x}`} position={[x, 0.95, 0]}>
           <boxGeometry args={[0.08, 0.08, 1.15]} />
-          <meshStandardMaterial color={VOLT} metalness={0.5} roughness={0.4} />
+          <meshStandardMaterial color={BLOOD} metalness={0.5} roughness={0.4} />
         </mesh>
       ))}
     </group>
@@ -156,7 +156,7 @@ function FloorProps() {
       {[0.45, 0.4, 0.35].map((r, i) => (
         <mesh key={i} position={[0, 0.06 + i * 0.11, 0]} rotation={[0, 0, Math.PI / 2]}>
           <cylinderGeometry args={[r, r, 0.09, 28]} />
-          <meshStandardMaterial color={i === 0 ? "#3a3f3a" : "#8a8f88"} metalness={0.5} roughness={0.45} />
+          <meshStandardMaterial color={i === 0 ? "#3A2A2A" : "#8A7F7A"} metalness={0.5} roughness={0.45} />
         </mesh>
       ))}
     </group>
@@ -195,11 +195,11 @@ function RigScene({ plates, variant, paused, scrollScrub }: { plates: number[]; 
       {/* floor + volt guide line */}
       <mesh position={[0, -0.06, 0]}>
         <boxGeometry args={[9, 0.12, 7]} />
-        <meshStandardMaterial color="#141614" roughness={0.9} />
+        <meshStandardMaterial color="#1A0F0F" roughness={0.9} />
       </mesh>
       <mesh position={[0, 0.01, 1.9]}>
         <boxGeometry args={[9, 0.02, 0.06]} />
-        <meshStandardMaterial color={VOLT} roughness={0.5} />
+        <meshStandardMaterial color={BLOOD} roughness={0.5} />
       </mesh>
     </group>
   );
@@ -251,7 +251,7 @@ export default function Rig3D({
       >
         <ambientLight intensity={0.55} />
         <directionalLight position={[4, 6, 4]} intensity={1.4} />
-        <pointLight position={[-3, 3, 2]} intensity={12} color={VOLT} />
+        <pointLight position={[-3, 3, 2]} intensity={12} color={BLOOD} />
         <RigScene plates={plates} variant={variant} paused={paused} scrollScrub={variant === "rack"} />
       </Canvas>
       {paused && <div className="rig-paused-badge mono">3D PAUSED</div>}
