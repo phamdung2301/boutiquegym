@@ -7,6 +7,31 @@ const STEEL = "#2a2e2a";
 const DARK = "#1a1d1a";
 const VOLT = "#D6FF3F";
 
+function PlateMesh({ side, targetX, kg, delay }: { side: 1 | -1; targetX: number; kg: number; delay: number }) {
+  // v3.1: plates slide onto the bar instead of appearing instantly.
+  // Each plate mounts outside the bar and lerps to its slot, staggered
+  // by index so a weight change reads as loading, not a jump cut.
+  const mesh = useRef<THREE.Mesh>(null);
+  const current = useRef(targetX + side * (1.1 + delay * 0.12));
+  const started = useRef<number | null>(null);
+  useFrame((state, delta) => {
+    if (!mesh.current) return;
+    if (started.current === null) started.current = state.clock.elapsedTime;
+    if (state.clock.elapsedTime - started.current < delay) {
+      mesh.current.position.x = current.current;
+      return;
+    }
+    current.current = THREE.MathUtils.lerp(current.current, targetX, 1 - Math.pow(0.0005, delta));
+    mesh.current.position.x = current.current;
+  });
+  return (
+    <mesh ref={mesh} position={[current.current, 1.35, 0]} rotation={[0, 0, Math.PI / 2]}>
+      <cylinderGeometry args={[plateRadiusKg(kg), plateRadiusKg(kg), 0.09, 28]} />
+      <meshStandardMaterial color={plateColorKg(kg)} metalness={0.55} roughness={0.4} />
+    </mesh>
+  );
+}
+
 function Barbell({ plates, withBench }: { plates: number[]; withBench: boolean }) {
   // Plates load outward from the centre on both sides, in the order the
   // plate breakdown lists them (heaviest closest to the centre).
@@ -16,12 +41,7 @@ function Barbell({ plates, withBench }: { plates: number[]; withBench: boolean }
       const thickness = 0.09;
       const centre = side * (x + thickness / 2);
       x += thickness + 0.015;
-      return (
-        <mesh key={`${side}-${i}`} position={[centre, 1.35, 0]} rotation={[0, 0, Math.PI / 2]}>
-          <cylinderGeometry args={[plateRadiusKg(kg), plateRadiusKg(kg), thickness, 28]} />
-          <meshStandardMaterial color={plateColorKg(kg)} metalness={0.55} roughness={0.4} />
-        </mesh>
-      );
+      return <PlateMesh key={`${side}-${i}-${kg}`} side={side} targetX={centre} kg={kg} delay={i * 0.12} />;
     });
   };
   return (
@@ -153,14 +173,17 @@ function FloorProps() {
   );
 }
 
-function RigScene({ plates, variant, paused }: { plates: number[]; variant: "rack" | "barbell"; paused: boolean }) {
+function RigScene({ plates, variant, paused, scrollScrub }: { plates: number[]; variant: "rack" | "barbell"; paused: boolean; scrollScrub: boolean }) {
   const group = useRef<THREE.Group>(null);
   const target = useRef({ x: 0, y: 0 });
   useFrame((state, delta) => {
     if (paused || !group.current) return;
+    // v3.1 scroll-scrub (rack hero only): the first viewport of scroll
+    // turns the rig, so scrolling feels like walking around the rack.
     // Cursor-lerp, never snap: ease the rig toward the pointer.
+    const scrollTurn = scrollScrub ? Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1.5) * 0.55 : 0;
     target.current.x = state.pointer.y * 0.12;
-    target.current.y = state.pointer.x * 0.35;
+    target.current.y = state.pointer.x * 0.35 + scrollTurn;
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, target.current.x, 1 - Math.pow(0.001, delta));
     group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, target.current.y, 1 - Math.pow(0.001, delta));
   });
@@ -229,7 +252,7 @@ export default function Rig3D({
         <ambientLight intensity={0.55} />
         <directionalLight position={[4, 6, 4]} intensity={1.4} />
         <pointLight position={[-3, 3, 2]} intensity={12} color={VOLT} />
-        <RigScene plates={plates} variant={variant} paused={paused} />
+        <RigScene plates={plates} variant={variant} paused={paused} scrollScrub={variant === "rack"} />
       </Canvas>
       {paused && <div className="rig-paused-badge mono">3D PAUSED</div>}
     </div>
